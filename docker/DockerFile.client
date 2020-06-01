@@ -1,0 +1,5 @@
+FROM node:12
+
+COPY ./client /app
+WORKDIR /app
+RUN npm install

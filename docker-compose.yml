@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    volumes:
+      - db:/var/lib/postgresql
+
+  server:
+    environment:
+      - DJANGO_DB_NAME=postgres
+      - DJANGO_DB_USER=postgres
+      - DJANGO_DB_PASSWORD=postgres
+      - DJANGO_DB_HOST=postgres
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DEBUG=True
+    build:
+      context: .
+      dockerfile: ./docker/DockerFile.server
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+    volumes:
+      - ./server:/app/
+    command: /bin/bash -c "python manage.py runserver 0.0.0.0:8000"
+
+  client:
+    build:
+      context: .
+      dockerfile: ./docker/DockerFile.client
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/app
+    command: /bin/bash -c "npm run dev"
+
+volumes:
+  db:

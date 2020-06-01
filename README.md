@@ -1,1 +1,1 @@
-# django-react-template
+# django-next-template
