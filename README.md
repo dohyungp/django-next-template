@@ -33,7 +33,7 @@ $ docker-compose build
 **3. Django 프로젝트 초기화**
 
 ```sh
-$ docker-compose run server django-admin startproject .
+$ docker-compose run server django-admin startproject server .
 ```
 
 **4. Django 앱 초기화**
